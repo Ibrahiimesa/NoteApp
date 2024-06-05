@@ -2,7 +2,7 @@ import React from 'react'
 import { FlatList, StyleSheet, View, Text } from 'react-native'
 import CustomButton from '../components/customButton'
 
-const NoteCard = ({ item, setCurrentPage }) => (
+const NoteCard = ({ item, setCurrentPage, handleDelete, setItemEdited }) => (
     <View style={styles.card}>
       <Text style={styles.cardTitle}>{item.title}</Text>
       <Text>{item.desc}</Text>
@@ -15,6 +15,7 @@ const NoteCard = ({ item, setCurrentPage }) => (
           width={100}
           onPress={() => {
             setCurrentPage('edit')
+            setItemEdited(item);
           }}
         />
         <CustomButton
@@ -23,13 +24,15 @@ const NoteCard = ({ item, setCurrentPage }) => (
           text="Hapus"
           fontSize={12}
           width={100}
-          onPress={() => {}}
+          onPress={() => {
+            handleDelete(item.id);
+          }}
         />
       </View>
     </View>
   )
 
-  const Home = ({ noteList, setCurrentPage }) => (
+  const Home = ({ noteList, setCurrentPage, handleDelete, setItemEdited }) => (
     <View style={styles.container}>
       <CustomButton
         backgroundColor="#DDD"
@@ -44,7 +47,7 @@ const NoteCard = ({ item, setCurrentPage }) => (
         showsVerticalScrollIndicator={false}
         data={noteList}
         renderItem={({ item }) => (
-          <NoteCard item={item} setCurrentPage={setCurrentPage} />
+          <NoteCard item={item} setCurrentPage={setCurrentPage} handleDelete={handleDelete} setItemEdited={setItemEdited}  />
         )}
         keyExtractor={(item) => item.id}
       />
